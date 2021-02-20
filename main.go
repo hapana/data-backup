@@ -10,6 +10,10 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+type backupConfig struct {
+	Directory string
+}
+
 func main() {
 	app := &cli.App{
 		Name:  "data-backup",
@@ -26,12 +30,20 @@ func main() {
 	}
 }
 
-func read_config() {
+func read_config() (backupConfig, error) {
 	var filepath = ".backup.json"
+	var config = backupConfig{}
 
-	content, err := ioutil.ReadFile(filepath)
+	bytes, err := ioutil.ReadFile(filepath)
 	if err != nil {
-		log.Fatal(err)
+		return backupConfig{}, err
 	}
-	fmt.Println(json.Marshal(content))
+
+	err = json.Unmarshal(bytes, &config)
+	if err != nil {
+		return backupConfig{}, err
+	}
+
+	fmt.Printf("Config is: %+v", config)
+	return config, nil
 }
