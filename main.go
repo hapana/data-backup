@@ -19,8 +19,17 @@ func main() {
 		Name:  "data-backup",
 		Usage: "backup data with complex process",
 		Action: func(c *cli.Context) error {
-			read_config()
+			readConfig()
 			return nil
+		},
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:        "path",
+				Value:       "path",
+				Usage:       "Path of the config file",
+				DefaultText: ".backup.json",
+				Aliases:     []string{"p"},
+			},
 		},
 	}
 
@@ -30,7 +39,7 @@ func main() {
 	}
 }
 
-func read_config() (backupConfig, error) {
+func readConfig() (backupConfig, error) {
 	var filepath = ".backup.json"
 	var config = backupConfig{}
 
