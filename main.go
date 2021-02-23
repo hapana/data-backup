@@ -21,8 +21,9 @@ func main() {
 		Name:  "data-backup",
 		Usage: "backup data with complex process",
 		Action: func(c *cli.Context) error {
+			_ = backup(c.String("path"))
 			readConfig(c.String("path"))
-			detectCompose(c.String("path"))
+			findFile(c.String("path"), "docker-compose*")
 			return nil
 		},
 		Flags: []cli.Flag{
@@ -40,6 +41,19 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func backup(path string) error {
+	_, err := readConfig(path)
+	if err != nil {
+		log.Fatalf("Can't read error: %v", err)
+	}
+
+	_, err = findFile(path, "docker-compose*")
+	if err != nil {
+		log.Fatalf("Can't detect compose: %v", err)
+	}
+	return nil
 }
 
 func readConfig(path string) (backupConfig, error) {
@@ -61,7 +75,7 @@ func readConfig(path string) (backupConfig, error) {
 	return config, nil
 }
 
-func detectCompose(path string) (bool, error) {
+func findFile(path, filePattern string) (bool, error) {
 
 	dir := filepath.Dir(path)
 	var found bool
