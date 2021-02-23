@@ -2,4 +2,4 @@ build:
 	go build -o bin/data-backup
 
 smoke: build
-	cd test && ../bin/data-backup
+	./bin/data-backup -p ./test
