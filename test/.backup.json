@@ -1,3 +1,6 @@
 {
-  "directory": "./data"
+  "directories": {
+    "data": "./data",
+    "backup": "./backup"
+  }
 }
