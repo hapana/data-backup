@@ -1,0 +1,10 @@
+version: "3"
+services:
+  homeass:
+    image: homeassistant/home-assistant:2021.1.5
+    environment:
+      TZ: Europe/London
+    volumes:
+      - ./data:/config
+    ports:
+      - 8123:8123
