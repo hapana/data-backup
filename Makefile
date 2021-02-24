@@ -2,4 +2,4 @@ build:
 	go build -o bin/data-backup
 
 smoke: build
-	./bin/data-backup -p ./test
+	./bin/data-backup -p ./test/
